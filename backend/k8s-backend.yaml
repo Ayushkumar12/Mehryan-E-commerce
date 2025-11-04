@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mehryaan-backend-secret
+type: Opaque
+stringData:
+  SESSION_SECRET: change-me
+  JWT_SECRET: change-me
+  MONGODB_URI: mongodb://mongo:27017/mehryaan
+  FRONTEND_URL: http://localhost:5173
+  CLOUDINARY_CLOUD_NAME: change-me
+  CLOUDINARY_API_KEY: change-me
+  CLOUDINARY_API_SECRET: change-me
+  CLOUDINARY_ORDERS_FOLDER: orders
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mehryaan-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mehryaan-backend
+  template:
+    metadata:
+      labels:
+        app: mehryaan-backend
+    spec:
+      containers:
+        - name: mehryaan-backend
+          image: mehryaan-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: mehryaan-backend-secret
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "5000"
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mehryaan-backend
+spec:
+  selector:
+    app: mehryaan-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
