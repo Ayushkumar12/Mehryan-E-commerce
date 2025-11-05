@@ -10,7 +10,6 @@ import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import AdminLogin from './pages/AdminLogin';
 import AdminSignup from './pages/AdminSignup';
 import AdminRoute from './components/AdminRoute';
 import './App.css';
@@ -21,15 +20,13 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            {/* Admin Auth Routes (No Header/Footer) */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+            {/* Auth Routes (No Header/Footer) */}
             <Route path="/admin/signup" element={<AdminSignup />} />
-            
-            {/* Customer Auth Routes (No Header/Footer) */}
-            <Route path="/login" element={<Login />} />
+            <Route path="/admin/login" element={<Login role="admin" />} />
+            <Route path="/login" element={<Login role="user" />} />
             <Route path="/signup" element={<Signup />} />
             
-            {/* All Other Routes (With Header/Footer via Layout) */}
+            {/* Public Routes (With Header/Footer via Layout) */}
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />

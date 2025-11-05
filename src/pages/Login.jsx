@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
-const Login = () => {
+const Login = ({ role = 'user' }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -10,17 +11,45 @@ const Login = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, isAuthenticated } = useUser();
+  const { login, isAuthenticated, user } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const redirectPath = useMemo(() => {
+    if (role === 'admin') {
+      return '/admin';
+    }
+
+    return location.state?.from?.pathname || '/cart';
+  }, [location.state?.from?.pathname, role]);
+
+  const signupLink = useMemo(() => {
+    if (role === 'admin') {
+      return {
+        to: '/admin/signup',
+        label: 'Sign up as an admin'
+      };
+    }
+
+    return {
+      to: '/signup',
+      label: 'Sign up here'
+    };
+  }, [role]);
+
   // Redirect if already logged in
   useEffect(() => {
-    if (isAuthenticated) {
-      const from = location.state?.from?.pathname || '/cart';
-      navigate(from);
+    if (!isAuthenticated) {
+      return;
     }
-  }, [isAuthenticated, navigate, location]);
+
+    if (role === 'admin' && user?.role !== 'admin') {
+      setError('You do not have admin access. Please login with an admin account.');
+      return;
+    }
+
+    navigate(redirectPath, { replace: true });
+  }, [isAuthenticated, navigate, redirectPath, role, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,13 +73,18 @@ const Login = () => {
       }
 
       const response = await login(formData.email, formData.password);
+
+      if (role === 'admin' && response.user.role !== 'admin') {
+        setError('This account does not have admin privileges.');
+        return;
+      }
+
       setSuccess(`Welcome back, ${response.user.name}!`);
-      
-      // Navigate back to cart or home after success
+
+      // Navigate back to previous page or role-specific default after success
       setTimeout(() => {
-        const from = location.state?.from?.pathname || '/cart';
-        navigate(from);
-      }, 1000);
+        navigate(redirectPath);
+      }, 800);
     } catch (err) {
       console.error('Login error:', err);
       console.error('Error response:', err.response?.data);
@@ -113,7 +147,7 @@ const Login = () => {
                   border: '1px solid #cfc',
                   fontSize: '14px'
                 }}>
-                  ✅ {success}
+                  ✅ {`${success}${role === 'admin' ? ' Redirecting to dashboard…' : ''}`}
                 </div>
               )}
 
@@ -178,8 +212,8 @@ const Login = () => {
             <div style={{ textAlign: 'center', borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
               <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>
                 Don't have an account?{' '}
-                <Link to="/signup" style={{ color: 'var(--saffron)', fontWeight: '600', textDecoration: 'none' }}>
-                  Sign up here
+                <Link to={signupLink.to} style={{ color: 'var(--saffron)', fontWeight: '600', textDecoration: 'none' }}>
+                  {signupLink.label}
                 </Link>
               </p>
             </div>
