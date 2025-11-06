@@ -39,7 +39,7 @@ const Home = () => {
     }
   ];
 
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = products.slice(0, 8);
 
   return (
     <div className="home">
@@ -59,22 +59,6 @@ const Home = () => {
               Design Your Suit
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="section container">
-        <h2 className="section-title">Our Collections</h2>
-        <div className="categories">
-          {categories.map(category => (
-            <Link key={category.id} to="/products" className="category-card">
-              <h3>{category.name}</h3>
-              <p>{category.description}</p>
-              <small style={{ color: 'var(--saffron)', fontWeight: 'bold' }}>
-                {category.count}
-              </small>
-            </Link>
-          ))}
         </div>
       </section>
 
