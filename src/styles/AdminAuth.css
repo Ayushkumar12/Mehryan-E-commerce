@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--maroon) 0%, #a00000 50%, var(--gold) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--secondary) 100%);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -32,7 +32,7 @@
 }
 
 .auth-header h1 {
-  color: var(--maroon);
+  color: var(--primary);
   font-size: 28px;
   margin-bottom: 10px;
   font-weight: 700;
@@ -57,7 +57,7 @@
 
 .form-group label {
   font-weight: 600;
-  color: var(--maroon);
+  color: var(--primary);
   margin-bottom: 8px;
   font-size: 14px;
 }
@@ -73,8 +73,8 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--maroon);
-  box-shadow: 0 0 0 3px rgba(160, 0, 0, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 103, 255, 0.15);
 }
 
 .form-group small {
@@ -95,13 +95,13 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--maroon), #a00000);
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(160, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(38, 103, 255, 0.3);
 }
 
 .btn-primary:disabled {
@@ -147,14 +147,14 @@
 }
 
 .auth-footer a {
-  color: var(--maroon);
+  color: var(--primary);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .auth-footer a:hover {
-  color: #a00000;
+  color: var(--primary-dark);
   text-decoration: underline;
 }
 

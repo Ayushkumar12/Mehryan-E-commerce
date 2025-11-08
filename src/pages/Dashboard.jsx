@@ -66,7 +66,7 @@ const Dashboard = () => {
     <div className="dashboard" style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       {/* Profile Header */}
       <section className="profile-header" style={{
-        background: 'linear-gradient(135deg, var(--maroon) 0%, rgba(214,69,65,0.8) 100%)',
+        background: 'blue',
         color: 'white',
         padding: '40px',
         borderRadius: '12px',

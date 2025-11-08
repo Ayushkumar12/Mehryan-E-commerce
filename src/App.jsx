@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import Customization from './pages/Customization';
 import Cart from './pages/Cart';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -33,6 +34,7 @@ function App() {
               <Route path="/customization" element={<Customization />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
               <Route 
                 path="/admin" 
                 element={

@@ -12,33 +12,6 @@ const Home = () => {
     alert(`${product.name} added to cart!`);
   };
 
-  const categories = [
-    {
-      id: 1,
-      name: 'Customized Suits',
-      description: 'Handcrafted with traditional Kashmiri embroidery',
-      count: 'Coming Soon'
-    },
-    {
-      id: 2,
-      name: 'Dry Fruits',
-      description: 'Premium quality from Kashmir valleys',
-      count: 'In Stock'
-    },
-    {
-      id: 3,
-      name: 'Rajma',
-      description: 'Finest red kidney beans',
-      count: 'In Stock'
-    },
-    {
-      id: 4,
-      name: 'Kesar',
-      description: 'Pure saffron threads',
-      count: 'In Stock'
-    }
-  ];
-
   const featuredProducts = products.slice(0, 8);
 
   return (
@@ -47,8 +20,8 @@ const Home = () => {
       <section className="hero">
         <div className="hero-content">
           <h1>Mehryaan</h1>
-          <p>From the Valleys of Kashmir to Your Home</p>
-          <p style={{ fontSize: '16px', marginBottom: '30px' }}>
+          <p className="hero-subtitle">From the Valleys of Kashmir to Your Home</p>
+          <p className="hero-description">
             Premium handcrafted products & customized suits with authentic Kashmiri heritage
           </p>
           <div className="hero-buttons">
@@ -102,34 +75,21 @@ const Home = () => {
       </section>
 
       {/* About Section */}
-      <section
-        className="section"
-        style={{
-          background: 'linear-gradient(135deg, var(--maroon), #a00000)',
-          color: 'white',
-          textAlign: 'center'
-        }}
-      >
+      <section className="section back">
         <div className="container">
-          <h2 style={{ fontSize: '28px', marginBottom: '20px' }}>Why Choose Mehryaan?</h2>
-          <div className="grid grid-3">
-            <div style={{ padding: '20px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '10px', color: 'var(--gold)' }}>
-                🏆 Authentic Quality
-              </h3>
-              <p>100% genuine products directly from Kashmiri artisans & producers</p>
+          <h2 className="why-heading">Why Choose Mehryaan?</h2>
+          <div className="grid grid-3 value-grid">
+            <div className="value-card">
+              <h3 className="value-title">🏆 Authentic Quality</h3>
+              <p className="value-text">100% genuine products directly from Kashmiri artisans & producers</p>
             </div>
-            <div style={{ padding: '20px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '10px', color: 'var(--gold)' }}>
-                ✨ Customization
-              </h3>
-              <p>Personalize your suits with unique embroidery, colors & designs</p>
+            <div className="value-card">
+              <h3 className="value-title">✨ Customization</h3>
+              <p className="value-text">Personalize your suits with unique embroidery, colors & designs</p>
             </div>
-            <div style={{ padding: '20px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '10px', color: 'var(--gold)' }}>
-                🚚 Fast Delivery
-              </h3>
-              <p>Quick shipping with real-time tracking across India</p>
+            <div className="value-card">
+              <h3 className="value-title">🚚 Fast Delivery</h3>
+              <p className="value-text">Quick shipping with real-time tracking across India</p>
             </div>
           </div>
         </div>
@@ -139,7 +99,7 @@ const Home = () => {
       <section className="section container">
         <div style={{ textAlign: 'center' }}>
           <h2 className="section-title">Ready to Experience Kashmiri Craftsmanship?</h2>
-          <Link to="/customization" className="btn btn-primary" style={{ padding: '15px 40px', fontSize: '16px' }}>
+          <Link to="/customization" className="btn btn-primary cta-button">
             Start Customizing Now
           </Link>
         </div>

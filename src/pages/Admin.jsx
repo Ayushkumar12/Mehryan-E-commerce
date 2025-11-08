@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductsContext';
 import { useUser } from '../context/UserContext';
 import orderService from '../services/orderService';
@@ -19,8 +18,8 @@ import {
   Legend
 } from 'recharts';
 
-const STATUS_COLOR_PALETTE = ['#9b1c31', '#ffb347', '#5b8def', '#00bfa6', '#ef6cde'];
-const CATEGORY_COLOR_PALETTE = ['#9b1c31', '#5b8def', '#ffc145', '#3cb4ac', '#ef6cde', '#7f5af0'];
+const STATUS_COLOR_PALETTE = ['var(--primary-dark)', 'var(--primary)', 'var(--secondary)', 'var(--secondary-light)', 'var(--accent)'];
+const CATEGORY_COLOR_PALETTE = ['var(--primary)', 'var(--secondary)', 'var(--secondary-light)', 'var(--accent)', 'var(--primary-dark)', 'rgba(59, 40, 204, 0.85)'];
 
 const formatINR = (amount) => {
   if (!amount && amount !== 0) return '₹0';
@@ -66,15 +65,15 @@ const AdminOrderDetailModal = ({ order, onClose, onStatusChange }) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: '24px 32px',
-            borderBottom: '1px solid #eee',
-            background: 'linear-gradient(135deg, rgba(128,0,32,0.08), rgba(128,0,32,0.18))'
+            borderBottom: '1px solid var(--border)',
+            background: 'linear-gradient(135deg, rgba(38,103,255,0.12), rgba(59,40,204,0.2))'
           }}
         >
           <div>
-            <h2 style={{ margin: 0, fontSize: '24px', color: 'var(--maroon)' }}>
+            <h2 style={{ margin: 0, fontSize: '24px', color: 'var(--primary-dark)' }}>
               Order #{order._id?.slice(-6)?.toUpperCase() || 'XXXXXX'}
             </h2>
-            <p style={{ margin: 0, fontSize: '14px', color: '#555' }}>
+            <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-muted)' }}>
               Placed on {new Date(order.createdAt).toLocaleString('en-IN')}
             </p>
           </div>
@@ -84,14 +83,14 @@ const AdminOrderDetailModal = ({ order, onClose, onStatusChange }) => {
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--maroon)',
+              color: 'var(--primary-dark)',
               fontSize: '24px',
               cursor: 'pointer',
               padding: '4px 8px',
               borderRadius: '6px',
               transition: 'background 0.2s ease'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(128,0,32,0.1)')}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(38,103,255,0.1)')}
             onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
             aria-label="Close order details"
           >
@@ -170,7 +169,7 @@ const AdminOrderDetailModal = ({ order, onClose, onStatusChange }) => {
                             <p style={{ margin: 0, fontSize: '13px', color: '#666' }}>SKU: {item.productId || 'N/A'}</p>
                           </div>
                           <div style={{ textAlign: 'right' }}>
-                            <p style={{ margin: 0, fontWeight: '600', color: 'var(--maroon)' }}>{formatINR(item.price)}</p>
+                            <p style={{ margin: 0, fontWeight: '600', color: 'var(--primary)' }}>{formatINR(item.price)}</p>
                             <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>Qty: {item.quantity}</p>
                           </div>
                         </div>
@@ -234,8 +233,8 @@ const AdminOrderDetailModal = ({ order, onClose, onStatusChange }) => {
                       gap: '8px',
                       padding: '8px 12px',
                       borderRadius: '20px',
-                      background: 'rgba(128,0,32,0.08)',
-                      color: 'var(--maroon)',
+                      background: 'rgba(38,103,255,0.12)',
+                      color: 'var(--primary)',
                       fontSize: '13px',
                       fontWeight: '600'
                     }}
@@ -330,7 +329,7 @@ const AdminOrderDetailModal = ({ order, onClose, onStatusChange }) => {
                     <span>Discount</span>
                     <span>{formatINR(order.orderSummary?.discount || 0)}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginTop: '8px', color: 'var(--maroon)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginTop: '8px', color: 'var(--primary-dark)' }}>
                     <span>Total Paid</span>
                     <span>{formatINR(order.orderSummary?.total || order.total)}</span>
                   </div>
@@ -472,16 +471,6 @@ const Admin = () => {
     });
     setEditingProduct(null);
     setIsFormVisible(false);
-  };
-
-  const getOrderStatusColor = (order) => {
-    const createdDate = new Date(order.createdAt);
-    const daysPassed = Math.floor((new Date() - createdDate) / (1000 * 60 * 60 * 24));
-
-    if (daysPassed < 1) return '#007bff';
-    if (daysPassed < 3) return '#ffc107';
-    if (daysPassed < 7) return '#17a2b8';
-    return '#28a745';
   };
 
   const analyticsData = useMemo(() => {
@@ -640,7 +629,7 @@ const Admin = () => {
         <section className="section" style={{ paddingBottom: 0 }}>
           <div
             style={{
-              background: 'linear-gradient(135deg, var(--maroon), #a00000)',
+              background: 'blue',
               color: 'white',
               padding: '30px',
               borderRadius: '8px',
